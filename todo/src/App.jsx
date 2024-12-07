@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
 // import "./App.css";
@@ -12,23 +12,38 @@ function App() {
 
   const [selectedtab, setselectedtab] = useState("All");
 
-  function Addtodo(newtodo) {
+  function addtodo(newtodo) {
     const newList = [...todo, { input: newtodo, complete: false }];
     setTodo(newList);
     handleSaveData(newList);
   }
 
-  function Completetodo(index) {
+  // function completetodo(index) {
+  //   const l = [...todo];
+  //   const c = l[index];
+  //   c["complete"] = true;
+  //   l[index] = c;
+  //   setTodo(l);
+  //   handleSaveData(l);
+  // }
+
+  function completetodo(index) {
     const l = [...todo];
-    const c = l[index];
-    c["complete"] = true;
-    l[index] = c;
-    setTodo(l);
-    handleSaveData(l);
+
+    // Validate the index
+    if (index >= 0 && index < l.length) {
+      const c = l[index];
+      c["complete"] = true;
+      l[index] = c;
+      setTodo(l);
+      handleSaveData(l);
+    } else {
+      console.error("Invalid index provided to completetodo:", index);
+    }
   }
 
-  function Deletetodo(index) {
-    const newlist = todo.filter((val, valIndex) => {
+  function deletetodo(index) {
+    let newlist = todo.filter((val, valIndex) => {
       return valIndex !== index;
     });
     setTodo(newlist);
@@ -50,18 +65,19 @@ function App() {
   return (
     <>
       <Header todo={todo}></Header>
-      <TodoList
-        todo={todo}
-        Deletetodo={Deletetodo}
-        Completetodo={Completetodo}
-        selectedtab={selectedtab}
-      ></TodoList>
       <Tabs
         todo={todo}
         selectedtab={selectedtab}
         setselectedtab={setselectedtab}
       ></Tabs>
-      <TodoInput></TodoInput>
+      <TodoList
+        todo={todo}
+        deleteTodo={deletetodo}
+        handleCompleteTodo={completetodo}
+        selectedtab={selectedtab}
+      ></TodoList>
+
+      <TodoInput addtodo={addtodo}></TodoInput>
     </>
   );
 }

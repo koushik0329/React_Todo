@@ -19,11 +19,11 @@ export function Tabs(props) {
             }}
             key={tabIndex}
             className={
-              "tab-button " + (tab == selectedTab ? " tab-selected" : " ")
+              "tab-button " + (tab == selectedtab ? " tab-selected" : " ")
             }
           >
             <h4>
-              {tab} <span>({numoftasks})</span>
+              {tab} <span>({noftasks})</span>
             </h4>
           </button>
         );
