@@ -70,14 +70,13 @@ function App() {
         selectedtab={selectedtab}
         setselectedtab={setselectedtab}
       ></Tabs>
+      <TodoInput addtodo={addtodo}></TodoInput>
       <TodoList
         todo={todo}
         deleteTodo={deletetodo}
         handleCompleteTodo={completetodo}
         selectedtab={selectedtab}
       ></TodoList>
-
-      <TodoInput addtodo={addtodo}></TodoInput>
     </>
   );
 }
