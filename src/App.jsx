@@ -150,15 +150,33 @@ function App() {
   }
 
   function handleSaveData(currTodos) {
-    localStorage.setItem("todo-app", JSON.stringify({ todos: currTodos }));
+    try {
+      localStorage.setItem("todo-app", JSON.stringify({ todos: currTodos }));
+    } catch (error) {
+      console.error("Failed to save to localStorage:", error);
+    }
   }
 
+  // useEffect(() => {
+  //   if (!localStorage || !localStorage.getItem("todo-app")) {
+  //     return;
+  //   }
+  //   const db = JSON.parse(localStorage.getItem("todo-app"));
+  //   setTodos(db.todos);
+  // }, []);
   useEffect(() => {
-    if (!localStorage || !localStorage.getItem("todo-app")) {
-      return;
+    try {
+      const savedData = localStorage.getItem("todo-app");
+      if (savedData) {
+        const parsedData = JSON.parse(savedData);
+        if (parsedData && Array.isArray(parsedData.todos)) {
+          setTodos(parsedData.todos);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to load from localStorage:", error);
+      // Keep default todos if loading fails
     }
-    const db = JSON.parse(localStorage.getItem("todo-app"));
-    setTodos(db.todos);
   }, []);
 
   return (

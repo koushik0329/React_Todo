@@ -62,7 +62,11 @@ export function TodoCard(props) {
         </button>
 
         {/* Button to edit the todo */}
-        <button onClick={() => handleEditTodo(todoIndex)}>
+        {/* <button onClick={() => handleEditTodo(todoIndex)}> */}
+        <button
+          onClick={() => handleEditTodo(todoIndex)}
+          disabled={todo.complete} // Optional: Prevent editing completed todos
+        >
           <h6>Edit</h6>
         </button>
 
